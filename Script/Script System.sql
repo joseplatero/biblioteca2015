@@ -211,23 +211,50 @@ CREATE PROCEDURE [DeleteAutor]
     @id nchar(5)
   AS
   DELETE FROM Autores WHERE autor_id=@id
-  GO
+GO
 
 CREATE PROCEDURE [DeleteLibro]
     @id nchar(5)
   AS
   DELETE FROM Libros WHERE libro_id=@id
-  GO
+GO
 
 CREATE PROCEDURE [DeleteEditorial]
     @id nchar(5)
   AS
   DELETE FROM Editoriales WHERE editorial_id=@id
-  GO
+GO
 
 CREATE PROCEDURE [DeleteCategoria]
     @id nchar(5)
   AS
   DELETE FROM Categorias WHERE categoria_id=@id
-  GO
+GO
 
+
+CREATE VIEW ViewAutor(@id integer)
+WITH ENCRYPTION
+  AS
+  SELECT a.nombre_completo, a.descripcion, p.nombre FROM Autores a INNER JOIN Paises p ON (a.pais_id=p.pais_id) WHERE a.autor_id=@id
+GO
+
+CREATE VIEW ViewLibro(@id integer)
+WITH ENCRYPTION
+  AS
+  SELECT i.titulo, i.paginas, i.description, e.nombre, a.nombre, c.nombre, FROM InventarioLibros i 
+  INNER JOIN Editoriales i ON (e.editorial_id=i.editorial_id)
+  INNER JOIN Autores i ON (a.autor_id=i.autor_id)
+  INNER JOIN Categorias i ON (c.categoria_id=i.categoria_id) WHERE i.inventario_libro_id=@id
+GO
+
+CREATE VIEW ViewEditorial(@id integer)
+WITH ENCRYPTION
+  AS
+  SELECT nombre, descripcion FROM Editoriales WHERE editorial_id=@id
+GO
+
+CREATE VIEW ViewCategoria(@id integer)
+WITH ENCRYPTION
+  AS
+  SELECT nombre, descripcion FROM Categorias WHERE categoria_id=@id
+GO
