@@ -206,3 +206,28 @@ CREATE TABLE IF NOT EXISTS 'Prestamos'(
   INDEX 'relacionPL' ('prestamo_id' ASC),
   INDEX 'FKPrestamosEstudiantes_idx' ('carnet' ASC)
 DEFAULT CHARACTER SET = latin1
+
+CREATE PROCEDURE [DeleteAutor]
+    @id nchar(5)
+  AS
+  DELETE FROM Autores WHERE autor_id=@id
+  GO
+
+CREATE PROCEDURE [DeleteLibro]
+    @id nchar(5)
+  AS
+  DELETE FROM Libros WHERE libro_id=@id
+  GO
+
+CREATE PROCEDURE [DeleteEditorial]
+    @id nchar(5)
+  AS
+  DELETE FROM Editoriales WHERE editorial_id=@id
+  GO
+
+CREATE PROCEDURE [DeleteCategoria]
+    @id nchar(5)
+  AS
+  DELETE FROM Categorias WHERE categoria_id=@id
+  GO
+
